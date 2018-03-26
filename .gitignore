@@ -88,3 +88,6 @@ settings.py
 
 .env
 db.sqlite3
+
+#pycharm project
+.idea/

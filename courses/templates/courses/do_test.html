@@ -1,0 +1,43 @@
+{% extends 'courses/base.html' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
+<body>
+{% block content %}
+    <title>Do test</title>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12"><h1>Course list</h1>
+                <p>Test for section {{ section.number }}: {{ section.title }}</p>
+
+                <hr/>
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% for question in section.question_set.all %}
+                        <p><strong>{{ question.text }}</strong></p>
+                        <ul>
+                            {% for answer in question.answer_set.all %}
+                                <li>
+                                    <input type="radio" name="question-{{ question.id }}"
+                                           value="{{ answer.id }}">{{ answer }}
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'courses/base.html' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
+<body>
+{% block content %}
+    <title>Student Detail</title>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12"><h1>Course list</h1>
+
+                <h1>Student detail</h1>
+
+                <p>{{ student }}</p>
+
+                <ul>
+                    {% for course, entries in scores %}
+                        <li>{{ course }}</li>
+                        <ul>
+                            {% for section, score in entries %}
+                                <li>{{ section }}: {{ score }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

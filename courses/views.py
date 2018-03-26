@@ -1,3 +1,4 @@
+#tsting git functionality
 from django.db import transaction
 from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.core.urlresolvers import reverse

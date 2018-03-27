@@ -65,9 +65,9 @@ def do_test(request, section_id):
     if request.method == 'POST':
         data = {}
         for key, value in request.POST.items():
-            if key == 'csrfmiddletoken':
+            if key == 'csrfmiddlewaretoken':  # problem was a typo 'csrfmiddletoken'
                 continue
-                # ('question-1':'2')
+            # {'question-1': '2'}
             question_id = key.split('-')[1]
             answer_id = request.POST.get(key)
             data[question_id] = answer_id

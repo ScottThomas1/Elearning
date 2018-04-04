@@ -13,6 +13,7 @@ from rest_framework.response import Response
 
 from courses.forms import CourseForm
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class CourseDetailView(DetailView):
@@ -22,7 +23,7 @@ class CourseDetailView(DetailView):
 course_detail = CourseDetailView.as_view()
 
 
-class CourseListView(ListView):
+class CourseListView(ListView):  # LoginRequiredMixin,
     model = Course
     queryset = Course.objects.prefetch_related('students')
 

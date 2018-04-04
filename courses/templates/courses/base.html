@@ -12,7 +12,7 @@
           <div class="row">
               <div class="col-xs-12">
                   {% if request.user.is_authenticated %}
-                  <p>Welcome <a href="{% url 'student_detail'%}">{{ request.user.username }}<br>
+                  <p>Logged in as <a href="{% url 'student_detail'%}">{{ request.user.username }}<br>
                   </a><a href="{% url 'auth:logout' %}">Logout</a> </p>
                   {% else %}
                   <p><a href="{%  url 'auth:login' %}">Login</a> </p>

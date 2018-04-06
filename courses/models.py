@@ -7,7 +7,8 @@ from django.conf import settings
 class Course(models.Model):
     name = models.CharField(max_length=200)
     students = models.ManyToManyField(User)
-    # text = models.TextField # 
+    teacher = models.CharField(max_length=20, default='teacher')
+    description = models.TextField(max_length=300, default='text')
 
     def get_absolute_url(self):
         return reverse('course_detail', args=(self.id,))

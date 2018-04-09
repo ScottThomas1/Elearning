@@ -18,12 +18,14 @@
                     <h3>{{ course.name }}</h3>
                     <h4>The teacher for this course will be:</h4>
                 <h4>{{ course.teacher }}</h4>
-            <p>{{ course.description }}</p>
+            <p>{{ course.context|safe }}</p>
+                <h4>Students currently enrolled</h4>
                 <ul>{% for student in course.students.all %}
                                 <li>{{ student }}</li>
                             {% endfor %}
                     {% comment %}This lists every student in each Course{% endcomment %}
                 </ul>
+            <h3>Here is a list of available Courses</h3>
                     <ul>
                         {% for section in course.section_set.all %}
                         <li><a href="{{ section.get_absolute_url }}">{{ section }}</a> </li>

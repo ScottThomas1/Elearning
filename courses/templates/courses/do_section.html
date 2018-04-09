@@ -6,7 +6,6 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
 </head>
 <body>
 
@@ -18,7 +17,7 @@
                 <p>Section {{ section.number }}: {{ section.title }}</p>
 
                 <p>
-                    {{ section.text }}
+                    {{ section.context|safe }}
                 </p>
                 <p><a href="{{ section.get_test_url }}">Take the test</a></p>
             </div>

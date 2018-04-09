@@ -2,13 +2,15 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from students.models import User
 from django.conf import settings
+# from tinymce.models import HTMLField
+from tinymce import models as tinymce_models
 
 
 class Course(models.Model):
     name = models.CharField(max_length=200)
     students = models.ManyToManyField(User)
     teacher = models.CharField(max_length=20, default='teacher')
-    description = models.TextField(max_length=300, default='text')
+    context = tinymce_models.HTMLField(default='text')
 
     def get_absolute_url(self):
         return reverse('course_detail', args=(self.id,))
@@ -21,7 +23,8 @@ class Section(models.Model):
     course = models.ForeignKey(Course)
     title = models.CharField(max_length=100)
     number = models.IntegerField()
-    text = models.TextField()
+    # context = HTMLField(default='HTML')
+    context = tinymce_models.HTMLField()
 
     class Meta:
         unique_together = ('course', 'number')

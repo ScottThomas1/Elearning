@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^student_detail/$', student_detail, name='student_detail'),
     url(r'^api/', include(router.urls)),
     url(r'^$', course_list, name='course_list'),
+    url(r'^tinymce/', include('tinymce.urls')),
 ]
 # url('^', include('django.contrib.auth.urls', namespace='auth')), second url pattern
 # url(r'^accounts/next/$', auth_views.LoginView.as_view()),

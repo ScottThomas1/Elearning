@@ -15,11 +15,10 @@
         <div class="row">
             <div class="col-xs-12"><h1>Course list</h1>
                 <p>Section {{ section.number }}: {{ section.title }}</p>
-
-                <p>
-                    {{ section.context|safe }}
-                </p>
+                <p>{{ section.context|safe }}</p>
                 <p><a href="{{ section.get_test_url }}">Take the test</a></p>
+                <h4>For further study please follow the link below</h4>
+                <a href="{{ section.link }}" target="_blank">Link for in depth study</a>
             </div>
         </div>
     </div>

@@ -13,18 +13,21 @@
     <title>Student Detail</title>
     <div class="container">
         <div class="row">
-            <div class="col-xs-12"><h1>Course list</h1>
-
+            <div class="col-xs-12">
+            <p><a href="{% url 'course_list' %}">Home</a></p>
+                <h1>Course list</h1>
                 <h1>Student detail</h1>
 
-                <p>{{ student }}</p>
-
+                <h3>{{ student }} your scores are below</h3>
                 <ul>
                     {% for course, entries in scores %}
                         <li>{{ course }}</li>
                         <ul>
                             {% for section, score in entries %}
-                                <li>{{ section }}: {{ score }}</li>
+                                <li>{{ section }}: {{ score }} %</li>
+                                <p>Right answers</p>
+                                <br> <p>Wrong answers</p>
+                                {{ answer }}
                             {% endfor %}
                         </ul>
                     {% endfor %}

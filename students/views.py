@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 
 from students.models import User
-from courses.models import Course
+from courses.models import Course, UserAnswer
 from courses.views import calculate_score
 
 
@@ -20,7 +20,12 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
+    #answer = UserAnswer.objects.filter()
     return render(request, 'students/student_detail.html', {
         'student': student,
+     #   'answer': answer,
         'scores': get_all_scores_for_user(student),
     })
+
+
+

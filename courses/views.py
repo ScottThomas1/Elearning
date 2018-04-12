@@ -5,6 +5,8 @@ from django.views.generic import DetailView, CreateView, ListView
 from django.shortcuts import render, redirect
 from courses.models import Course, Section, Question, UserAnswer
 
+from django.contrib.auth.decorators import login_required
+
 from courses.serializers import SectionSerializer
 
 from rest_framework import viewsets

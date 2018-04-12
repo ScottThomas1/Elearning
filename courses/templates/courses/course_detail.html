@@ -21,7 +21,10 @@
                 <h4>{{ course.teacher }}</h4>
             <p>{{ course.context|safe }}</p>
                 {% if user.is_authenticated %}
+
                 <h4>Students currently enrolled</h4>
+
+
                 <ul>{% for student in course.students.all %}
                                 <li>{{ student }}</li>
                             {% endfor %}

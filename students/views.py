@@ -8,7 +8,7 @@ from courses.views import calculate_score
 
 def get_all_scores_for_user(user):
     scores = []
-    for course in Course.objects.all():
+    for course in Course.objects.filter(students=user):
         course_scores = []
         for section in course.section_set.order_by('number'):
             course_scores.append((section, calculate_score(user, section),))
@@ -20,10 +20,8 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
-    #answer = UserAnswer.objects.filter()
     return render(request, 'students/student_detail.html', {
         'student': student,
-     #   'answer': answer,
         'scores': get_all_scores_for_user(student),
     })
 

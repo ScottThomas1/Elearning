@@ -5,6 +5,8 @@ from django.views.generic import DetailView, CreateView, ListView
 from django.shortcuts import render, redirect
 from courses.models import Course, Section, Question, UserAnswer
 
+from students.models import User
+
 from django.contrib.auth.decorators import login_required
 
 from courses.serializers import SectionSerializer
@@ -15,7 +17,6 @@ from rest_framework.response import Response
 
 from courses.forms import CourseForm
 from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class CourseDetailView(DetailView):

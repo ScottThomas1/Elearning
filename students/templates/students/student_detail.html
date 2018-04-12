@@ -19,19 +19,29 @@
                 <h1>Student detail</h1>
 
                 <h3>{{ student }} your scores are below</h3>
+
+
+
+
+
                 <ul>
                     {% for course, entries in scores %}
                         <li>{{ course }}</li>
+
                         <ul>
+
                             {% for section, score in entries %}
                                 <li>{{ section }}: {{ score }} %</li>
-                                <p>Right answers</p>
-                                <br> <p>Wrong answers</p>
-                                {{ answer }}
+
+
+
                             {% endfor %}
                         </ul>
                     {% endfor %}
                 </ul>
+
+
+
             </div>
         </div>
     </div>

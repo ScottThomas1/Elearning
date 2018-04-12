@@ -29,7 +29,9 @@
                                 <li>
                                     <input type="radio" name="question-{{ question.id }}"
                                            value="{{ answer.id }}">{{ answer }}
-                                </li>
+                                </li> {% comment %}using checkboxs allows for multiple answer to be seleted
+                                        have to find out how to gave half credit when only half answer is choosen
+                                      {% endcomment %}
                             {% endfor %}
                         </ul>
                     {% endfor %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import PermissionDenied
 
 from students.models import User
@@ -11,7 +11,16 @@ def get_all_scores_for_user(user):
     for course in Course.objects.filter(students=user):
         course_scores = []
         for section in course.section_set.order_by('number'):
-            course_scores.append((section, calculate_score(user, section),))
+            questions = []
+            for question in section.question_set.all():
+                questions.append((
+                    question,
+                    question.useranswer_set.get(user=user).answer,
+                    question.answer_set.filter(correct=True)
+                ))
+            course_scores.append((
+                section, calculate_score(user, section), questions
+            ))
         scores.append((course, course_scores),)
     return scores
 
@@ -20,10 +29,9 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
+    user = get_object_or_404(UserAnswer)
     return render(request, 'students/student_detail.html', {
+        'User': user,
         'student': student,
         'scores': get_all_scores_for_user(student),
     })
-
-
-

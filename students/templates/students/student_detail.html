@@ -30,7 +30,9 @@
 
                         <ul>
 
-                            {% for section, score in entries %}
+                            {% for section, score, questions in entries %}
+                                {{ questions.answer }}
+
                                 <li>{{ section }}: {{ score }} %</li>
 
 

@@ -22,10 +22,10 @@
 
                 <form action="" method="POST">
                     {% csrf_token %}
-                    {% for question in section.question_set.all %}
+                    {% for question in section.questions.all %}
                         <p><strong>{{ question.text }}</strong></p>
                         <ul>
-                            {% for answer in question.answer_set.all %}
+                            {% for answer in question.answers.all %}
                                 <li>
                                     <input type="radio" name="question-{{ question.id }}"
                                            value="{{ answer.id }}">{{ answer }}

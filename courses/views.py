@@ -89,7 +89,7 @@ def perform_test(user, data, section):
         for question_id, answer_id in data.items():
             question = Question.objects.get(id=question_id)
             answer_id = int(answer_id)
-            if answer_id not in question.answer_set.values_list('id', flat=True):
+            if answer_id not in question.answers.values_list('id', flat=True):
                 raise SuspiciousOperation('Answer is not valid for this question')
             user_answer = UserAnswer.objects.create(
                 user=user,

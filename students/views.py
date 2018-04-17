@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied
 from students.models import User
 from courses.models import Course, UserAnswer, Answer
 from courses.views import calculate_score
+import datetime
 
 
 def get_all_scores_for_user(user):
@@ -27,7 +28,7 @@ def get_all_scores_for_user(user):
             for question in section.questions.all():
                 # ^ looping through every question in sections in the course
                 question_data = {'correct_answer': question.answers.filter(correct=True), 'question': question}
-                # ^ inserting question.answers.filter(correct=True) into 
+                # ^ inserting question.answers.filter(correct=True) into
                 # ^ inserting list of correct answers
                 try:
                     # ^ try to do the following
@@ -39,13 +40,13 @@ def get_all_scores_for_user(user):
                     # ^ useranswer is None (blank)
                 if useranswer is not None and useranswer.answer in question_data['correct_answer']:
                     # ^ looking to see if useranswer wasn't left blank and
-                    # ^ useranswer.(lookup) answer is in question_data in the qeryset 
+                    # ^ useranswer.(lookup) answer is in question_data in the qeryset
                     # ^ (functions like a list) 'correct_answer'
-                    question_data['correct'] = True
+                    question_data['correct'] = 'Right answer!!'
                     # ^ if useranswer is not None and useranswer is in list then useranswer is True
                 else:
-                    # ^ ???
-                    question_data['correct'] = False
+                    # ^
+                    question_data['correct'] = ' YOU ARE WRONG!!'
                     # ^ if useranswer is None or useranswer is not in list
                 question_data['useranswer'] = useranswer
                 # ^ question_data with list 'useranswer' is useranswer
@@ -67,11 +68,9 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
-    # useranswers = UserAnswer.objects.all()
-    # answer = UserAnswer.objects.filter(answer__correct=True, user=student, question__section__course_id=13)
+    now = datetime.datetime.now()
     return render(request, 'students/student_detail.html', {
-        #'answer': answer,
-        #'useranswers': useranswers,
+        'now': now,
         'student': student,
         'scores': get_all_scores_for_user(student),
     })

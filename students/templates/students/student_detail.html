@@ -15,10 +15,9 @@
         <div class="row">
             <div class="col-xs-12">
             <p><a href="{% url 'course_list' %}">Home</a></p>
-                <h1>Course list</h1>
-                <h1>Student detail</h1>
+                <h2>Student detail Report</h2>
 
-                <h3>{{ student }} your scores are below</h3>
+                <h4>{{ student }} your scores are below</h4>
 
 
 
@@ -32,13 +31,16 @@
 
                             {% for section_data in course_data.sections %}
 
-                                <li>{{ section_data.section }}: {{ section_data.score }} %
+                                <li>{{ section_data.section }}
+                                    <h4>You scored a {{ section_data.score }}%</h4>
 
                                 <ul>
                                 {% for question_data in section_data.questions %}
-                        <li>{{ question_data.question }}: {{ question_data.correct }}</li>
-
+                        <li>{{ question_data.question }}
+                            <br>{{ question_data.correct }}
+                                    </li> {{ question_data.incorrect }}
                                 {% endfor %}
+                                <h4>Date and time you took the test <br>{{ now }}
                                 </ul>
                                 </li>
 
@@ -47,10 +49,6 @@
                             {% endfor %}
                         </ul></li>
                     {% endfor %}
-                </ul>
-
-
-
             </div>
         </div>
     </div>

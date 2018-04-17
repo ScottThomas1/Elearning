@@ -25,20 +25,27 @@
 
 
                 <ul>
-                    {% for course, entries in scores %}
-                        <li>{{ course }}</li>
+                    {% for course_data  in scores %}
+                        <li>{{ course_data.course }}
 
                         <ul>
 
-                            {% for section, score in entries %}
+                            {% for section_data in course_data.sections %}
 
+                                <li>{{ section_data.section }}: {{ section_data.score }} %
 
-                                <li>{{ section }}: {{ score }} %</li>
+                                <ul>
+                                {% for question_data in section_data.questions %}
+                        <li>{{ question_data.question }}: {{ question_data.correct }}</li>
+
+                                {% endfor %}
+                                </ul>
+                                </li>
 
 
 
                             {% endfor %}
-                        </ul>
+                        </ul></li>
                     {% endfor %}
                 </ul>
 

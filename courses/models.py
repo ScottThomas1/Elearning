@@ -47,7 +47,7 @@ class Section(models.Model):
 
 
 class Question(models.Model):
-    section = models.ForeignKey(Section)
+    section = models.ForeignKey(Section, related_name='questions')
     text = models.CharField(max_length=1000)
 
     def __str__(self):
@@ -55,7 +55,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, related_name='answers')
     text = models.CharField(max_length=1000)
     correct = models.BooleanField()
 
@@ -64,9 +64,12 @@ class Answer(models.Model):
 
 
 class UserAnswer(models.Model):
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, related_name='useranswers')
     answer = models.ForeignKey(Answer)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     class Meta:
         unique_together = ('question', 'user')
+
+    def __str__(self):
+        return str(self.answer)

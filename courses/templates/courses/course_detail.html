@@ -22,6 +22,8 @@
             <p>{{ course.context|safe }}</p>
                 {% if user.is_authenticated %}
 
+
+
                 <h4>Students currently enrolled</h4>
 
 
@@ -36,6 +38,7 @@
                         <li><a href="{{ section.get_absolute_url }}">{{ section }}</a></li>
                         {% endfor %}
                     </ul>
+
                 {% endif %}
             </div>
         </div>

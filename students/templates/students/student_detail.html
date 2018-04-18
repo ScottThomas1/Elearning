@@ -1,4 +1,5 @@
 {% extends 'courses/base.html' %}
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,40 +15,51 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-            <p><a href="{% url 'course_list' %}">Home</a></p>
+                <p><a href="{% url 'course_list' %}">Home</a></p>
                 <h2>Student detail Report</h2>
 
                 <h4>{{ student }} your scores are below</h4>
-
-
-
 
 
                 <ul>
                     {% for course_data  in scores %}
                         <li>{{ course_data.course }}
 
-                        <ul>
+                            <ul>
 
-                            {% for section_data in course_data.sections %}
+                                {% for section_data in course_data.sections %}
 
-                                <li>{{ section_data.section }}
-                                    <h4>You scored a {{ section_data.score }}%</h4>
+                                    <li>{{ section_data.section }}
+                                        <h4>You scored a {{ section_data.score }}%</h4>
 
-                                <ul>
-                                {% for question_data in section_data.questions %}
-                        <li>{{ question_data.question }}
-                            <br>{{ question_data.correct }}
-                                    </li> {{ question_data.incorrect }}
+                                        <ul>
+                                            {% for question_data in section_data.questions %}
+                                                <li><h4>{{ question_data.question }}</h4>
+                                             </li>{% if question_data.correct %}
+                                                You chose {{ question_data.correct }} that is the right answer!
+                                            {% endif %}
+
+                                                {% if question_data.incorrect %}
+                                                    WRONG! your answer was: {{ question_data.incorrect }}<br>
+                                                    The right answer was: {{ question_data.correct_answer|join:'' }}
+                                                            {% comment %}this tag is not displaying the correct answer why?
+                                                            I was calling the wrong dict I was calling question_data.correct.
+                                                            This won't work because that dict only has the correct answers the
+                                                            user chose.The dict I needed was question_data.correct_answer this
+                                                            dict has all correct answer where question_data.correct has
+                                                            {% endcomment %}
+                                                    <br>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <h4>Date and time you took the test <br>{{ now }}</h4>
+                                        </ul>
+                                    </li>
+
+
+
                                 {% endfor %}
-                                <h4>Date and time you took the test <br>{{ now }}
-                                </ul>
-                                </li>
-
-
-
-                            {% endfor %}
-                        </ul></li>
+                            </ul>
+                        </li>
                     {% endfor %}
             </div>
         </div>

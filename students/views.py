@@ -42,11 +42,11 @@ def get_all_scores_for_user(user):
                     # ^ looking to see if useranswer wasn't left blank and
                     # ^ useranswer.(lookup) answer is in question_data in the qeryset
                     # ^ (functions like a list) 'correct_answer'
-                    question_data['correct'] = 'Right answer!!'
+                    question_data['correct'] = useranswer
                     # ^ if useranswer is not None and useranswer is in list then useranswer is True
                 else:
                     # ^
-                    question_data['correct'] = ' YOU ARE WRONG!!'
+                    question_data['incorrect'] = useranswer
                     # ^ if useranswer is None or useranswer is not in list
                 question_data['useranswer'] = useranswer
                 # ^ question_data with list 'useranswer' is useranswer

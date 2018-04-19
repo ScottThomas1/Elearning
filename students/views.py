@@ -6,6 +6,8 @@ from courses.models import Course, UserAnswer, Answer
 from courses.views import calculate_score
 import datetime
 
+from django.views.generic import ListView
+
 
 def get_all_scores_for_user(user):
     scores = []
@@ -18,7 +20,7 @@ def get_all_scores_for_user(user):
         sections = []
         # ^ empty list called sections
         for section in course.section_set.order_by('number'):
-            # ^ looping through all sections in course (what does the . do?)
+            # ^ looping through all sections in course
             # ^ doing a reverse lookup on section (section_set) and ordering
             # ^ them the the number on the Section model
             section_data = {'score': calculate_score(user, section), 'section': section}
@@ -74,3 +76,14 @@ def student_detail(request):
         'student': student,
         'scores': get_all_scores_for_user(student),
     })
+
+
+def student_page(request):
+    student = request.user
+    course = Course.objects.get(id__exact=13)
+    return render(request, 'students/student_page.html', {
+        'student': student,
+        'course': course,
+    })
+
+

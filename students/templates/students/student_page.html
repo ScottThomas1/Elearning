@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Page</title>
+</head>
+<body>
+
+This is your Student Page {{ student }} treat it with respect, YOU WILL GET ONLY ONE!!<br>
+
+<h3>Course Name:</h3> {{ course }}
+<h3>Description:</h3> {{ course.context|safe }}
+<h3>Teachers Name:<h3> <h4>{{ course.teacher }}</h4>
+
+
+
+                    {% comment %}
+                    {% for student in course %}
+                        <li> </li>
+                        <p>{{ course.teacher|safe }} is the teacher for this Course</p>
+                        {{ course.context|safe }}
+                    {% endfor %}
+                    {% endcomment %}
+</body>
+</html>

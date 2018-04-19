@@ -11,7 +11,12 @@
 <body>
 {% block content %}
     <p><a href="{% url 'course_list' %}">Home</a></p>
-    <title>Course Form</title>
+    <button onclick="goBack()">Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script><title>Course Form</title>
     <div class="container">
         <div class="row">
             <div class="col-xs-12"><h1>Course list</h1>

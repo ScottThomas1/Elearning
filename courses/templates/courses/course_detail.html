@@ -15,6 +15,12 @@
         <div class="row">
             <div class="col-xs-12">
             <p><a href="{% url 'course_list' %}">Home</a></p>
+                <button onclick="goBack()">Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
                 <h1>Course Detail</h1>
                     <h3>{{ course.name }}</h3>
                     <h4>The teacher for this course will be:</h4>
@@ -24,9 +30,9 @@
 
 
 
+
+
                 <h4>Students currently enrolled</h4>
-
-
                 <ul>{% for student in course.students.all %}
                                 <li>{{ student }}</li>
                             {% endfor %}

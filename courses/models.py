@@ -23,7 +23,6 @@ class Section(models.Model):
     course = models.ForeignKey(Course)
     title = models.CharField(max_length=100)
     number = models.IntegerField()
-    # context = HTMLField(default='HTML')
     context = tinymce_models.HTMLField()
     link = models.URLField()
 

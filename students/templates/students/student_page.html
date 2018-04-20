@@ -1,25 +1,45 @@
-<!DOCTYPE html>
+{% extends "courses/base.html" %}
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Page</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
 </head>
 <body>
+{% block content %}
 
-This is your Student Page {{ student }} treat it with respect, YOU WILL GET ONLY ONE!!<br>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+            <p><a href="{% url 'course_list' %}">Home</a></p>
+                <button onclick="goBack()">Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+                <title>{{ student }}'s Page</title>
+                <h2>This is your Student Page {{ student }}, treat it with respect, YOU WILL GET ONLY ONE!!</h2>
+{%  for course in courses %}
 
-<h3>Course Name:</h3> {{ course }}
-<h3>Description:</h3> {{ course.context|safe }}
-<h3>Teachers Name:<h3> <h4>{{ course.teacher }}</h4>
+    <h4>Course Name: {{ course.name }}</h4>
+    <p>Description:{{ course.context|safe }}</p>
+    <h3>Teachers Name:</h3> {{ course.teacher }}
+
+
+{% endfor %}
 
 
 
-                    {% comment %}
-                    {% for student in course %}
-                        <li> </li>
-                        <p>{{ course.teacher|safe }} is the teacher for this Course</p>
-                        {{ course.context|safe }}
-                    {% endfor %}
-                    {% endcomment %}
+
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
 </body>
 </html>

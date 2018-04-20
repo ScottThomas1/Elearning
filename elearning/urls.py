@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^$', course_list, name='course_list'),
     url(r'^tinymce/', include('tinymce.urls')),
 
-    url(r'^student_page/$', student_page, name='student_page'),
+    url(r'^student_page/$', student_page, name='student_page')
 ]
 # url('^', include('django.contrib.auth.urls', namespace='auth')), second url pattern
 # url(r'^accounts/next/$', auth_views.LoginView.as_view()),

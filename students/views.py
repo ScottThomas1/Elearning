@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
-
 from students.models import User
-from courses.models import Course, UserAnswer, Answer
+
+from courses.models import Course, UserAnswer, User, Answer
 from courses.views import calculate_score
 import datetime
 
-from django.views.generic import ListView
+from django.views.generic.base import TemplateView
 
 
 def get_all_scores_for_user(user):
@@ -80,10 +80,12 @@ def student_detail(request):
 
 def student_page(request):
     student = request.user
-    course = Course.objects.get(id__exact=13)
+    courses = Course.objects.filter(students=student)
     return render(request, 'students/student_page.html', {
         'student': student,
-        'course': course,
-    })
+        'courses': courses
+     })
+
+
 
 

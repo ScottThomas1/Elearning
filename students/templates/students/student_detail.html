@@ -29,19 +29,14 @@
                 <h2>Student detail Report</h2>
 
                 <h4>{{ student }} your scores are below</h4>
-
-
                 <ul>
                     {% for course_data  in scores %}
                         <li>{{ course_data.course }}
-
                             <ul>
-
                                 {% for section_data in course_data.sections %}
 
                                     <li>{{ section_data.section }}
                                         <h4>You scored a {{ section_data.score }}%</h4>
-
                                         <ul>
                                             {% for question_data in section_data.questions %}
                                                 <li><h4>{{ question_data.question }}</h4>
@@ -50,7 +45,7 @@
                                             {% endif %}
 
                                                 {% if question_data.incorrect %}
-                                                    <p2><strong>WRONG!</strong></p2> your answer was: <p2><strong>{{ question_data.incorrect }}</p2></strong><br>
+                                                    <p2><strong>WRONG!</strong></p2> your answer was: <p2><strong>{{ question_data.incorrect }}</strong></p2><br>
                                                     The right answer was: <strong><p1>{{ question_data.correct_answer|join:'' }}</p1></strong>
                                                             {% comment %}this tag is not displaying the correct answer why?
                                                             I was calling the wrong dict I was calling question_data.correct.
@@ -64,9 +59,6 @@
                                             <h4>Date and time you took the test <br>{{ now }}</h4>
                                         </ul>
                                     </li>
-
-
-
                                 {% endfor %}
                             </ul>
                         </li>

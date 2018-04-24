@@ -23,15 +23,9 @@ class CourseDetailView(DetailView):
     model = Course
 
 
-course_detail = CourseDetailView.as_view()
-
-
 class CourseListView(ListView):  # LoginRequiredMixin,
     model = Course
     queryset = Course.objects.prefetch_related('students')
-
-
-course_list = CourseListView.as_view()
 
 
 def course_add(request):
@@ -65,7 +59,10 @@ def do_section(request, section_id):
 def do_test(request, section_id):
     if not request.user.is_authenticated():
         raise PermissionDenied
+    user = request.user
     section = Section.objects.get(id=section_id)
+    if section.has_taken_test(user):
+        return redirect(reverse('student_detail'))
     if request.method == 'POST':
         data = {}
         for key, value in request.POST.items():
@@ -79,6 +76,7 @@ def do_test(request, section_id):
         return redirect(reverse('show_results', args=(section.id,)))
     return render(request, 'courses/do_test.html', {
         'section': section,
+        'user': user
     })
 
 

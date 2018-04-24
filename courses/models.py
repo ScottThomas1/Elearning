@@ -42,7 +42,11 @@ class Section(models.Model):
         next_section = Section.objects.get(
             number=self.number + 1, course=self.course_id
         )  # can't figure out how to use objects.filter
-        return reverse('do_section', args=(next_section.id,))       # to get next section? when set to + 1
+        return reverse('do_section', args=(next_section.id,))
+
+    def has_taken_test(self, user):
+        return UserAnswer.objects.filter(
+            user=user, question__section=self).exists()
 
 
 class Question(models.Model):

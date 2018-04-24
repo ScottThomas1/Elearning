@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 from students.models import User
@@ -78,6 +79,7 @@ def student_detail(request):
     })
 
 
+@login_required
 def student_page(request):
     student = request.user
     courses = Course.objects.filter(students=student)
@@ -85,7 +87,6 @@ def student_page(request):
         'student': student,
         'courses': courses
      })
-
 
 
 

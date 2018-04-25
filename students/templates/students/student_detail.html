@@ -8,9 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 {% block content %}
     <style>
-    p1   {color: green}
-    p2 {color: red}
-
+    p1   {color: darkgreen}
+    p2 {color: darkred}
 </style>
 </head>
 <body>
@@ -27,14 +26,14 @@
                 }
             </script>
                 <h2>Student detail Report</h2>
-
+            {% if question_data in section_data.questions %}{% endif %}
                 <h4>{{ student }} your scores are below</h4>
                 <ul>
                     {% for course_data  in scores %}
                         <li>{{ course_data.course }}
+
                             <ul>
                                 {% for section_data in course_data.sections %}
-
                                     <li>{{ section_data.section }}
                                         <h4>You scored a {{ section_data.score }}%</h4>
                                         <ul>

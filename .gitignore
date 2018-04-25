@@ -91,3 +91,4 @@ settings.py
 
 #pycharm project
 .idea/
+#templates/

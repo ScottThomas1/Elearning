@@ -24,12 +24,9 @@
                 <title>{{ student }}'s Page</title>
                 <h2>This is your Student Page {{ student }}, treat it with respect, YOU WILL GET ONLY ONE!!</h2>
 {%  for course in courses %}
-
-    <h4>Course Name: {{ course.name }}</h4>
+    <h3>Course Name: {{ course.name }}</h3>
+    <h3>Teachers Name: {{ course.teacher }}</h3>
     <p>Description:{{ course.context|safe }}</p>
-    <h3>Teachers Name:</h3> {{ course.teacher }}
-
-
 {% endfor %}
 
 

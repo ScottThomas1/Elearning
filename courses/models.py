@@ -70,6 +70,7 @@ class UserAnswer(models.Model):
     question = models.ForeignKey(Question, related_name='useranswers')
     answer = models.ForeignKey(Answer)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    time = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ('question', 'user')

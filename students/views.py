@@ -5,7 +5,7 @@ from students.models import User
 
 from courses.models import Course, UserAnswer, User, Answer
 from courses.views import calculate_score
-import datetime
+import datetime, time
 
 from django.views.generic.base import TemplateView
 
@@ -13,14 +13,14 @@ from django.views.generic.base import TemplateView
 def get_all_scores_for_user(user):
     scores = []
     # ^ empty list called scores
-    for course in Course.objects.filter(students=user):
+    for course in Course.objects.filter(students=user, section__questions__useranswers__user=user).distinct():
         # ^ gets the course of the Model Course as well as the objects and
         # ^ filters them by student now called 'user'
         course_data = {'course': course}
         # ^ inserting course to a dict
         sections = []
         # ^ empty list called sections
-        for section in course.section_set.order_by('number'):
+        for section in course.section_set.order_by('number').filter(questions__useranswers__user=user).distinct():
             # ^ looping through all sections in course
             # ^ doing a reverse lookup on section (section_set) and ordering
             # ^ them the the number on the Section model
@@ -71,9 +71,9 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
-    now = datetime.datetime.now()
+    # now = datetime.datetime.now()
     return render(request, 'students/student_detail.html', {
-        'now': now,
+        #'now': now,
         'student': student,
         'scores': get_all_scores_for_user(student),
     })

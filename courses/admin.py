@@ -31,7 +31,7 @@ admin.site.register(Answer, AnswerAdmin)
 
 
 class UserAnswerAdmin(admin.ModelAdmin):
-    list_display = ['user', 'question', 'answer']
+    list_display = ['user', 'question', 'answer', 'test_was_taken']
     list_filter = ['question__section']
 
 

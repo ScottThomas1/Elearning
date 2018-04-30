@@ -15,18 +15,14 @@
         <div class="row">
             <div class="col-xs-12">
             <p><a href="{% url 'course_list' %}">Home</a></p>
-                <button onclick="goBack()">Back</button>
-            <script>
-                function goBack() {
-                    window.history.back();
-                }
-            </script>
                 <title>{{ student }}'s Page</title>
                 <h2>This is your Student Page {{ student }}, treat it with respect, YOU WILL GET ONLY ONE!!</h2>
 {%  for course in courses %}
     <h3>Course Name: {{ course.name }}</h3>
-    <h3>Teachers Name: {{ course.teacher }}</h3>
+    <h4>Teachers Name: {{ course.teacher }}</h4>
     <p>Description:{{ course.context|safe }}</p>
+    View full testing results
+    <strong><a href="{% url 'student_detail'%}">Here</a></strong>
 {% endfor %}
 
 

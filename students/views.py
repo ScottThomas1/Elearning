@@ -5,7 +5,7 @@ from students.models import User
 
 from courses.models import Course, UserAnswer, User, Answer
 from courses.views import calculate_score
-import datetime, time
+import datetime
 
 from django.views.generic.base import TemplateView
 
@@ -71,7 +71,8 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
-    # now = datetime.datetime.now()
+    # now = UserAnswer.objects.filter(answer__useranswer__test_was_taken=)
+    # now = UserAnswer.objects.filter(user=student).datetimes('test_was_taken', 'minute')
     return render(request, 'students/student_detail.html', {
         #'now': now,
         'student': student,

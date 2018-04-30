@@ -14,17 +14,8 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-
-
                 <p><a href="{% url 'course_list' %}">Home</a></p>
-                <button onclick="goBack()">Back</button>
-            <script>
-                function goBack() {
-                    window.history.back();
-                }
-            </script>
-                <h1>Course list</h1>
-                <p>Section {{ section.number }}: {{ section.title }}</p>
+                <h2>Section {{ section.number }}: {{ section.title }}</h2>
                 <p>{{ section.context|safe }}</p>
                 <p><a href="{{ section.get_test_url }}">Take the test</a></p>
                 <h4>For further study please follow the link below</h4>

@@ -19,12 +19,6 @@
         <div class="row">
             <div class="col-xs-12">
                 <p><a href="{% url 'course_list' %}">Home</a></p>
-            <button onclick="goBack()">Back</button>
-            <script>
-                function goBack() {
-                    window.history.back();
-                }
-            </script>
                 <h2>Student detail Report</h2>
                 <h4>{{ student }} your scores are below</h4>
                 <ul>
@@ -33,13 +27,16 @@
                             <ul>
                                 {% for section_data in course_data.sections %}
                                     <li>{{ section_data.section }}
-                                        <h4>You scored a {{ section_data.score }}%</h4>
                                         <ul>
                                             {% for question_data in section_data.questions %}
-                                                <li><h4>{{ question_data.question }}</h4>
-                                             </li>{% if question_data.correct %}
-                                                You chose <p1><strong>{{ question_data.correct }}</strong></p1> that is the right answer!
-                                            {% endif %}
+                                                {% if forloop.first %}
+                                                    <h4>You scored a {{ section_data.score }}%</h4>
+                                                    <h4>Date and time you took the test <br>{{ question_data.useranswer.test_was_taken }}</h4>
+                                                {% endif %}
+                                                <li><h4>{{ question_data.question }}</h4></li>
+                                                {% if question_data.correct %}
+                                                    You chose <p1><strong>{{ question_data.correct }}</strong></p1> that is the right answer!
+                                                {% endif %}
 
                                                 {% if question_data.incorrect %}
                                                     <p2><strong>WRONG!</strong></p2> your answer was: <p2><strong>{{ question_data.incorrect }}</strong></p2><br>
@@ -53,7 +50,6 @@
                                                     <br>
                                                 {% endif %}
                                             {% endfor %}
-                                            <h4>Date and time you took the test <br>{{ now }}</h4>
                                         </ul>
                                     </li>
                                 {% endfor %}

@@ -17,19 +17,24 @@
             <p><a href="{% url 'course_list' %}">Home</a></p>
                 <title>{{ student }}'s Page</title>
                 <h2>This is your Student Page {{ student }}, treat it with respect, YOU WILL GET ONLY ONE!!</h2>
-{%  for course in courses %}
-    <h3>Course Name: {{ course.name }}</h3>
-    <h4>Teachers Name: {{ course.teacher }}</h4>
-    <p>Description:{{ course.context|safe }}</p>
-    View full testing results
+{%  for course_data in scores %}
+    <h3>Course Name: {{ course_data.course}}</h3>
+    <p>{{ course_data.course.context|safe }}</p>
+    <h4>{{ course_data.course.teacher }} is the teacher for this Course</h4>
+    {% for section_data in course_data.sections %}
+        {% if section_data.test_was_taken %}
+                <h4>{{ section_data.section }}</h4>
+            Your score is <strong>{{ section_data.score }}%</strong><br>
+            The date and time you took the test was <strong>{{ section_data.test_was_taken }}</strong>
+            <br>View full testing results
     <strong><a href="{% url 'student_detail'%}">Here</a></strong>
+            {% if section_data in scores <= 50 %}
+            You Failed!
+            {% endif %}
+        {% endif %}
+    {% endfor %}<br>
+    <hr>
 {% endfor %}
-
-
-
-
-
-
             </div>
         </div>
     </div>

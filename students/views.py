@@ -10,21 +10,33 @@ import datetime
 from django.views.generic.base import TemplateView
 
 
-def get_all_scores_for_user(user):
+def get_all_scores_for_user(user, taken_only=True):
     scores = []
     # ^ empty list called scores
-    for course in Course.objects.filter(students=user, section__questions__useranswers__user=user).distinct():
+    courses = Course.objects.filter(students=user)
+    if taken_only:
+        courses = courses.filter(section__questions__useranswers__user=user).distinct()
+    for course in courses:
         # ^ gets the course of the Model Course as well as the objects and
         # ^ filters them by student now called 'user'
         course_data = {'course': course}
         # ^ inserting course to a dict
         sections = []
         # ^ empty list called sections
-        for section in course.section_set.order_by('number').filter(questions__useranswers__user=user).distinct():
+        section_qs = course.section_set.order_by('number')
+        if taken_only:
+            section_qs = section_qs.filter(questions__useranswers__user=user).distinct()
+        for section in section_qs:
             # ^ looping through all sections in course
             # ^ doing a reverse lookup on section (section_set) and ordering
             # ^ them the the number on the Section model
-            section_data = {'score': calculate_score(user, section), 'section': section}
+            has_taken = UserAnswer.objects.filter(user=user, question__section=section).order_by('test_was_taken').first()
+            section_data = {
+                'score': calculate_score(user, section),
+                'section': section,
+            }
+            if has_taken is not None:
+                section_data['test_was_taken'] = has_taken.test_was_taken
             # ^ inserting calculate_score, user and section into key 'score' and section into 'section'
             questions = []
             # ^ empty list called questions
@@ -71,10 +83,7 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
-    # now = UserAnswer.objects.filter(answer__useranswer__test_was_taken=)
-    # now = UserAnswer.objects.filter(user=student).datetimes('test_was_taken', 'minute')
     return render(request, 'students/student_detail.html', {
-        #'now': now,
         'student': student,
         'scores': get_all_scores_for_user(student),
     })
@@ -86,7 +95,8 @@ def student_page(request):
     courses = Course.objects.filter(students=student)
     return render(request, 'students/student_page.html', {
         'student': student,
-        'courses': courses
+        'courses': courses,
+        'scores': get_all_scores_for_user(student, taken_only=False)
      })
 
 

@@ -30,23 +30,26 @@
                                         <ul>
                                             {% for question_data in section_data.questions %}
                                                 {% if forloop.first %}
-                                                    <h4>You scored a {{ section_data.score }}%</h4>
-                                                    <h4>Date and time you took the test <br>{{ question_data.useranswer.test_was_taken }}</h4>
+                                                    <p><strong>You scored a {{ section_data.score }}%</strong></p>
+                                                    <p><strong>Date and time you took the test <br>
+                                                        {{ question_data.useranswer.test_was_taken }}</strong></p>
                                                 {% endif %}
                                                 <li><h4>{{ question_data.question }}</h4></li>
                                                 {% if question_data.correct %}
-                                                    You chose <p1><strong>{{ question_data.correct }}</strong></p1> that is the right answer!
+                                                    You chose <p1><strong>{{ question_data.correct }}</strong>
+                                                </p1> that is the right answer!
                                                 {% endif %}
-
                                                 {% if question_data.incorrect %}
-                                                    <p2><strong>WRONG!</strong></p2> your answer was: <p2><strong>{{ question_data.incorrect }}</strong></p2><br>
-                                                    The right answer was: <strong><p1>{{ question_data.correct_answer|join:'' }}</p1></strong>
-                                                            {% comment %}this tag is not displaying the correct answer why?
-                                                            I was calling the wrong dict I was calling question_data.correct.
-                                                            This won't work because that dict only has the correct answers the
-                                                            user chose.The dict I needed was question_data.correct_answer this
-                                                            dict has all correct answer where question_data.correct has
-                                                            {% endcomment %}
+                                                    <p2><strong>WRONG!</strong></p2> your answer was: <p2>
+                                                    <strong>{{ question_data.incorrect }}</strong></p2><br>
+                                                    The right answer was:
+                                                    <strong><p1>{{ question_data.correct_answer|join:'' }}</p1></strong>
+                                                    {% comment %}this tag is not displaying the correct answer why?
+                                                    I was calling the wrong dict I was calling question_data.correct.
+                                                    This won't work because that dict only has the correct answers the
+                                                    user chose.The dict I needed was question_data.correct_answer this
+                                                    dict has all correct answer where question_data.correct has
+                                                    {% endcomment %}
                                                     <br>
                                                 {% endif %}
                                             {% endfor %}

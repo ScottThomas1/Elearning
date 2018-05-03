@@ -28,9 +28,6 @@
             The date and time you took the test was <strong>{{ section_data.test_was_taken }}</strong>
             <br>View full testing results
     <strong><a href="{% url 'student_detail'%}">Here</a></strong>
-            {% if section_data in scores <= 50 %}
-            You Failed!
-            {% endif %}
         {% endif %}
     {% endfor %}<br>
     <hr>

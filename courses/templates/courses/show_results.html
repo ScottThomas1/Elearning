@@ -16,11 +16,13 @@
             <div class="col-xs-12">
                 <p><a href="{% url 'course_list' %}">Home</a></p>
                 <h1>Your Results</h1>
-                <p>You scored {{ score }}%</p>
+                <p>You scored a {{ score }}%</p>
                 <ul>
+                    {% if section.number == 1 %}
                     <li><a href="{{ section.get_next_section_url }}">Next Section</a></li>
-                    <h3>See your scores below</h3>
-                    <li><a href="{% url 'student_detail' %}">How did you do?</a>
+                    {% endif %}
+                    <h3>See your results below</h3>
+                        <li><a href="{% url 'student_detail' %}">How did you do?</a>
                 </ul>
             </div>
         </div>

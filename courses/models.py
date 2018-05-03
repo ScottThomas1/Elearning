@@ -41,7 +41,7 @@ class Section(models.Model):
     def get_next_section_url(self):
         next_section = Section.objects.get(
             number=self.number + 1, course=self.course_id
-        )  # can't figure out how to use objects.filter
+        )
         return reverse('do_section', args=(next_section.id,))
 
     def has_taken_test(self, user):

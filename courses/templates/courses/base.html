@@ -12,8 +12,10 @@
           <div class="row">
               <div class="col-xs-12">
                   {% if request.user.is_authenticated %}
-
+                     Welcome! {{ user.username }}<br>
+                      {% comment %}
                   <p>Welcome <a href="{% url 'student_detail'%}">{{ request.user.username }}</a><br>
+                      {% endcomment %}
                   <a href="{% url 'auth:logout' %}">Logout</a>
                       <p><a href="{% url 'student_page' %}">{{ request.user.username }} this is your Course Page</a></p>
                   {% else %}

@@ -19,7 +19,7 @@ from django.contrib import admin
 from rest_framework import routers
 from courses.views import (course_add, do_section, do_test, show_results, SectionViewSet,
                            CourseDetailView, CourseListView)
-from students.views import student_detail, student_page
+from students.views import student_detail, student_page, public_page
 from api.views import UserViewSet
 from django.contrib.auth import views as auth_views
 
@@ -43,7 +43,8 @@ urlpatterns = [
     url(r'^$', CourseListView.as_view(), name='course_list'),
     url(r'^tinymce/', include('tinymce.urls')),
 
-    url(r'^student_page/$', student_page, name='student_page')
+    url(r'^student_page/$', student_page, name='student_page'),
+    url(r'^public_page/$', public_page, name='public_page'),
 ]
 # url('^', include('django.contrib.auth.urls', namespace='auth')), second url pattern
 # url(r'^accounts/next/$', auth_views.LoginView.as_view()),

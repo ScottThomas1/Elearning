@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from students.models import User
 
@@ -83,6 +84,8 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
+   # if request.method == "POST":
+    #    return redirect(reverse, 'students/public_page.html')
     return render(request, 'students/student_detail.html', {
         'student': student,
         'scores': get_all_scores_for_user(student),
@@ -100,4 +103,25 @@ def student_page(request):
      })
 
 
-
+def public_page(request):
+    courses = []
+    for course in Course.objects.all():
+        course_data = {'course': course}
+        sections = []
+        for section in course.section_set.all():
+            section_data = {'section': section}
+            students = []
+            for student in section.public_students.all():
+                student_data = {'student': student}
+                student_data['score'] = calculate_score(student, section)
+                first_answer = UserAnswer.objects.filter(user=student, question__section=section).order_by('test_was_taken').first()
+                if first_answer is not None:
+                    student_data['test_was_taken'] = first_answer.test_was_taken
+                students.append(student_data)
+            section_data['students'] = students
+            sections.append(section_data)
+        course_data['sections'] = sections
+        courses.append(course_data)
+    return render(request, 'students/public_page.html', {
+        'courses': courses,
+    })

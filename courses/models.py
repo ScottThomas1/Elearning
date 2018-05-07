@@ -25,6 +25,7 @@ class Section(models.Model):
     number = models.IntegerField()
     context = tinymce_models.HTMLField()
     link = models.URLField()
+    public_students = models.ManyToManyField(User)
 
     class Meta:
         unique_together = ('course', 'number')

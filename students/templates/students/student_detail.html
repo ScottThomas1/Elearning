@@ -59,6 +59,11 @@
                             </ul>
                         </li>
                     {% endfor %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <br><h3>Display your scores for EVERYONE to see!</h3>
+                    <input type="submit" value="Submit">
+                </form>
             </div>
         </div>
     </div>

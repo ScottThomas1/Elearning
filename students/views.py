@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
+
+from students.forms import PublicSettingsForm
 from students.models import User
 
 from courses.models import Course, UserAnswer, User, Answer
@@ -84,9 +86,14 @@ def student_detail(request):
     if not request.user.is_authenticated():
         raise PermissionDenied
     student = request.user
-   # if request.method == "POST":
-    #    return redirect(reverse, 'students/public_page.html')
+    form = PublicSettingsForm(student=student)
+    if request.method == "POST":
+        form = PublicSettingsForm(request.POST, student=student)
+        if form.is_valid():
+            form.save(student)
+            return redirect(reverse('public_page'))
     return render(request, 'students/student_detail.html', {
+        'form': form,
         'student': student,
         'scores': get_all_scores_for_user(student),
     })
@@ -111,7 +118,7 @@ def public_page(request):
         for section in course.section_set.all():
             section_data = {'section': section}
             students = []
-            for student in section.public_students.all():
+            for student in course.public_students.all():
                 student_data = {'student': student}
                 student_data['score'] = calculate_score(student, section)
                 first_answer = UserAnswer.objects.filter(user=student, question__section=section).order_by('test_was_taken').first()

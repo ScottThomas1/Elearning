@@ -11,6 +11,7 @@ class Course(models.Model):
     students = models.ManyToManyField(User)
     teacher = models.CharField(max_length=20, default='teacher')
     context = tinymce_models.HTMLField(default='text')
+    public_students = models.ManyToManyField(User, related_name='public_courses')
 
     def get_absolute_url(self):
         return reverse('course_detail', args=(self.id,))
@@ -25,7 +26,6 @@ class Section(models.Model):
     number = models.IntegerField()
     context = tinymce_models.HTMLField()
     link = models.URLField()
-    public_students = models.ManyToManyField(User)
 
     class Meta:
         unique_together = ('course', 'number')

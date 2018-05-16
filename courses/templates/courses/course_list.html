@@ -14,9 +14,6 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-
-            {% if request.user.is_authenticated %}
-            {% endif %}
                 <h1>A Course list</h1>
                 <ol>
                     {% for course in course_list %}
@@ -25,6 +22,10 @@
                         {{ course.context|safe }}
                     {% endfor %}
                 </ol>
+            {% if request.user.is_authenticated %}
+                <h3>Click the link below to see Students Scores</h3>
+                <a href="{% url 'public_page' %}">Student Score</a>
+            {% endif %}
             </div>
         </div>
     </div>

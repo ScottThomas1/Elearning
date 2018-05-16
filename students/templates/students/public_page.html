@@ -4,21 +4,24 @@
 <head>
     <meta charset="UTF-8">
     {% block content%}
-    <title></title>
+    <title>Public Page</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+        <p><a href="{% url 'course_list' %}">Home</a> </p>
 {% for course_data in courses %}
     <h2>{{ course_data.course }}</h2>
 
     {% for section_data in course_data.sections %}
         <h4>{{ section_data.section }}</h4>
         {% for student_data in section_data.students %}
-            {{ student_data.student }} scored a
-            {{ student_data.score }} %<br>
-            On {{ student_data.test_was_taken }}<br><hr>
+            {% if student_data.test_was_taken %}
+                {{ student_data.student }} scored a
+                {{ student_data.score }} %<br>
+                On {{ student_data.test_was_taken }}<br>
+            {% endif %}
         {% endfor %}
     {% endfor %}
 {% endfor %}

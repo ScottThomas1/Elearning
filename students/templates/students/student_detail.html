@@ -62,6 +62,7 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <br><h3>Display your scores for EVERYONE to see!</h3>
+                    {{ form.as_p }}
                     <input type="submit" value="Submit">
                 </form>
             </div>

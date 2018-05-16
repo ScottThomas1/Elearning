@@ -13,7 +13,6 @@
         <p><a href="{% url 'course_list' %}">Home</a> </p>
 {% for course_data in courses %}
     <h2>{{ course_data.course }}</h2>
-
     {% for section_data in course_data.sections %}
         <h4>{{ section_data.section }}</h4>
         {% for student_data in section_data.students %}

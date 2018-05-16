@@ -12,6 +12,7 @@ class Course(models.Model):
     teacher = models.CharField(max_length=20, default='teacher')
     context = tinymce_models.HTMLField(default='text')
     public_students = models.ManyToManyField(User, related_name='public_courses')
+    # comment = models.CharField(max_length=600, default='comment')
 
     def get_absolute_url(self):
         return reverse('course_detail', args=(self.id,))

@@ -31,6 +31,17 @@
                                             {% for question_data in section_data.questions %}
                                                 {% if forloop.first %}
                                                     <p><strong>You scored a {{ section_data.score }}%</strong></p>
+                                                    <h4>{% if section_data.score >= 90 %}
+                                                        You got an <p1><strong>A Show off!</strong></p1>
+                                                        {% elif section_data.score >= 80 %}
+                                                        B good job!
+                                                        {% elif section_data.score >= 70 %}
+                                                        C not bad
+                                                        {% elif section_data.score >= 60 %}
+                                                        You got a D we need to talk young man!
+                                                        {% elif section_data.score <= 50 %}
+                                                        You got an F, <p2><strong>F is for FAILURE!</strong></p2>
+                                                    {% endif %}</h4>
                                                     <p><strong>Date and time you took the test <br>
                                                         {{ question_data.useranswer.test_was_taken }}</strong></p>
                                                 {% endif %}

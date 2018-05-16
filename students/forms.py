@@ -5,7 +5,6 @@ from courses.models import Course
 
 class PublicSettingsForm(forms.Form):
     display_scores = forms.BooleanField(required=False)
-    test = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         if 'student' in kwargs:
@@ -18,9 +17,9 @@ class PublicSettingsForm(forms.Form):
 
     def save(self, student):
         display_scores = self.cleaned_data.get('display_scores', False)
+
         for course in Course.objects.all():
             if display_scores:
                 course.public_students.add(student)
             else:
                 course.public_students.remove(student)
-

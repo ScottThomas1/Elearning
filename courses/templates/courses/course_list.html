@@ -17,7 +17,7 @@
                 <h1>A Course list</h1>
                 <ol>
                     {% for course in course_list %}
-                        <li><a href="{{ course.get_absolute_url }}">{{ course.name }}</a> </li>
+                        <li><a href="{{ course.get_absolute_url }}">{{ course.name }}</a></li>
                         <p><strong>{{ course.teacher|safe }}</strong> is the teacher for this Course</p>
                         {{ course.context|safe }}
                     {% endfor %}

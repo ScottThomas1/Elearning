@@ -18,7 +18,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from courses.views import (course_add, do_section, do_test, show_results, SectionViewSet,
-                           CourseDetailView, CourseListView)
+                           course_detail, CourseListView) #CourseDetailView
 from students.views import student_detail, student_page, public_page
 from api.views import UserViewSet
 from django.contrib.auth import views as auth_views
@@ -29,8 +29,9 @@ router.register(r'sections', SectionViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
-    url(r'^course_detail/(?P<pk>\d+)/$', CourseDetailView.as_view(), name='course_detail'),
+    url(r'^course_detail/(?P<course_id>\d+)/$', course_detail,
+        name='course_detail'),
+    # url(r'^course_detail/(?P<pk>\d+)/$', CourseDetailView.as_view(), name='course_detail'),
     url(r'^course_add/$', course_add, name='course_add'),
     url(r'^', include('django.contrib.auth.urls', namespace='auth')),
 

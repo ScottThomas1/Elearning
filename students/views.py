@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 
+# from students.forms import Comment
 from students.forms import PublicSettingsForm
-from students.models import User
+from students.models import User, Comment
 
 from courses.models import Course, UserAnswer, User, Answer
 from courses.views import calculate_score
@@ -121,7 +122,9 @@ def public_page(request):
             for student in course.public_students.all():
                 student_data = {'student': student}
                 student_data['score'] = calculate_score(student, section)
-                first_answer = UserAnswer.objects.filter(user=student, question__section=section).order_by('test_was_taken').first()
+                first_answer = UserAnswer.objects.filter(
+                    user=student, question__section=section).order_by(
+                    'test_was_taken').first()
                 if first_answer is not None:
                     student_data['test_was_taken'] = first_answer.test_was_taken
                 students.append(student_data)
@@ -129,6 +132,8 @@ def public_page(request):
             sections.append(section_data)
         course_data['sections'] = sections
         courses.append(course_data)
+    comments = Comment.objects.all()
     return render(request, 'students/public_page.html', {
+        'comments': comments,
         'courses': courses,
     })

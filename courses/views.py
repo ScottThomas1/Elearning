@@ -5,7 +5,7 @@ from django.views.generic import DetailView, CreateView, ListView
 from django.shortcuts import render, redirect
 from courses.models import Course, Section, Question, UserAnswer
 
-from students.models import User
+from students.models import Comment
 
 from django.contrib.auth.decorators import login_required
 
@@ -16,11 +16,29 @@ from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from courses.forms import CourseForm
+from students.forms import PublicSettingsForm
 from django.http import HttpResponseRedirect
 
 
-class CourseDetailView(DetailView):
-    model = Course
+def course_detail(request, course_id):
+    comment = Comment.objects.get(pk=8)
+    # comment = Comment.objects.filter(id=course_id)
+    # comment = Comment.objects.all()
+    form = PublicSettingsForm
+    course = Course.objects.get(id=course_id)
+    return render(request, 'courses/course_detail.html', {
+        'comment': comment,
+        'course': course,
+        'form': form
+    })
+
+# class CourseDetailView(DetailView):
+#     model = Course
+#     student_model = Comment
+#     form = PublicSettingsForm
+    # form = forms.CharField(widget=forms.Textarea(attrs={'rows': 7,
+    #                                                        'cols': 60,
+    #                                                        'style': 'resize:none;'}))
 
 
 class CourseListView(ListView):  # LoginRequiredMixin,
@@ -110,7 +128,10 @@ def show_results(request, section_id):
     if not request.user.is_authenticated():
         raise PermissionDenied
     section = Section.objects.get(id=section_id)
+    #form = PublicComment.comment()
+    #if request.method == 'POST':
     return render(request, 'courses/show_results.html', {
+           # 'form': form,
         'section': section,
         'score': calculate_score(request.user, section)
     })

@@ -34,9 +34,9 @@
                                                     <h4>{% if section_data.score >= 90 %}
                                                         You got an <p1><strong>A Show off!</strong></p1>
                                                         {% elif section_data.score >= 80 %}
-                                                        B good job!
+                                                        You got a B good job!
                                                         {% elif section_data.score >= 70 %}
-                                                        C not bad
+                                                        You got a C not bad
                                                         {% elif section_data.score >= 60 %}
                                                         You got a D we need to talk young man!
                                                         {% elif section_data.score <= 50 %}
@@ -69,11 +69,11 @@
                                 {% endfor %}
                             </ul>
                         </li>
-                    {% endfor %}
+                    {% endfor %}<br>
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <br><h3>Display your scores for EVERYONE to see!</h3>
-                    {{ form.as_p }}
+                    <p><strong>Please check the box to display ALL your scores for the WORLD to see!</strong></p>
+                    <table>{{ form.display_scores }}</table>
                     <input type="submit" value="Submit">
                 </form>
             </div>

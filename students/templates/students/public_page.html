@@ -23,7 +23,11 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
-{% endfor %}
+{% endfor %}<hr>
+        <div>{% for comment in comments %}
+                <p>{{ comment.text }}<br>-{{ comment.student }}</p><br>
+        {% endfor %}
+        </div>
 {% endblock %}
             </div>
         </div>

@@ -31,18 +31,25 @@
                             <li><a href="{{ section.get_absolute_url }}">{{ section }}</a></li>
                         {% endfor %}
                     </ul><hr>
-                    <form action="" method="POST">
-                    {% csrf_token %}
-                <table>{{ form.comment }}</table>
-                    <h4>Leave a comment below. Do it... DO IT NOOOWWW!</h4>
-                    <input type="submit" value="Submit">
-                    </form>
+                    {% if form %}
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <table>{{ form.comment }}</table>
+                            <h4>Leave a comment below. Do it... DO IT NOOOWWW!</h4>
+                            <input type="submit" value="Submit">
+                        </form>
+                    {% endif %}
                 {% else %}
                     <h3>YOU SHALL NOT PASS!</h3> (Please contact {{ course.teacher }} to enroll in this Course)
                 {% endif %}<hr>
             <p><strong>Below are students scores and comments they have chosen to display. Take some time to leave a
             comment and show EVERYONE what you think!</strong></p>
-            {{ comment }}<br>
+            {% for comment in comments %}
+                <p>
+                    {{ comment }}<br>
+                    -{{ comment.student }}
+                </p>
+            {% endfor %}
             </div>
         </div>
     </div>

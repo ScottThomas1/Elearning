@@ -10,27 +10,25 @@ class PublicSettingsForm(forms.Form):
                                                            'cols': 60,
                                                            'style': 'resize:none;'}))
 
-    def __init__(self, *args, **kwargs):
-        if 'student' in kwargs:
-            student = kwargs.pop('student')
-        else:
-            student = None
+    def __init__(self, course, student, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if student is not None and student.public_courses.exists():
+        self.course = course
+        self.student = student
+        if student.public_courses.exists():
             self.fields['display_scores'].initial = True
-        elif student is not None and student.student_comment.exists():
+        elif student.student_comment.exists():
             self.fields['comment'].initial = True
 
-    def save(self, student):
+    def save(self):
         display_scores = self.cleaned_data.get('display_scores', False)
         comment = self.cleaned_data.get('comment', '')
+        print(comment)
         if comment:
-            Comment.objects.create(student=student, text=comment)
-        for course in Course.objects.all():
-            if display_scores and comment:
-                course.public_students.add(student)
-            else:
-                course.public_students.remove(student)
+            Comment.objects.create(student=self.student, text=comment, course=self.course)
+        if display_scores and comment:
+            self.course.public_students.add(self.student)
+        else:
+            self.course.public_students.remove(self.student)
 
 
 # class Comment(forms.ModelForm):

@@ -20,6 +20,19 @@
                 <p><a href="{{ section.get_test_url }}">Take the test</a></p>
                 <h4>For further study please follow the link below</h4>
                 <a href="{{ section.link }}" target="_blank"> For in depth study</a>
+    <hr>
+                <h3>Would you like to show the world your AMAZING test
+                    score?</h3>
+            <form action="" method="POST">
+                {{ form.display_scores }} <strong>Check HERE!</strong>
+            </form>
+                <h3>Below are the scores of some of our Students</h3>
+                <strong>
+             {% if student_data.test_was_taken %}
+                {{ student_data.student }} scored a
+                {{ student_data.score }} %<br>
+                On {{ student_data.test_was_taken }}<br>
+            {% endif %}</strong>
             </div>
         </div>
     </div>

@@ -84,17 +84,10 @@ def get_all_scores_for_user(user, taken_only=True):
 
 
 def student_detail(request):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise PermissionDenied
     student = request.user
-    form = PublicSettingsForm(student=student)
-    if request.method == "POST":
-        form = PublicSettingsForm(request.POST, student=student)
-        if form.is_valid():
-            form.save(student)
-            return redirect(reverse('public_page'))
     return render(request, 'students/student_detail.html', {
-        'form': form,
         'student': student,
         'scores': get_all_scores_for_user(student),
     })

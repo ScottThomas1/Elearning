@@ -5,7 +5,7 @@ from django.views.generic import DetailView, CreateView, ListView
 from django.shortcuts import render, redirect
 from courses.models import Course, Section, Question, UserAnswer
 
-from students.models import Comment
+from students.models import Comment, User
 
 from django.contrib.auth.decorators import login_required
 
@@ -21,13 +21,20 @@ from django.http import HttpResponseRedirect
 
 
 def course_detail(request, course_id):
-    comment = Comment.objects.get(pk=8)
-    # comment = Comment.objects.filter(id=course_id)
-    # comment = Comment.objects.all()
-    form = PublicSettingsForm
     course = Course.objects.get(id=course_id)
+    comments = Comment.objects.filter(course=course)
+    if request.user.is_authenticated:
+        student = request.user
+        if request.method == "POST":
+            form = PublicSettingsForm(course, student, request.POST)
+            if form.is_valid():
+                form.save()
+                # return redirect(reverse('public_page'))
+        form = PublicSettingsForm(course, student)
+    else:
+        form = None
     return render(request, 'courses/course_detail.html', {
-        'comment': comment,
+        'comments': comments,
         'course': course,
         'form': form
     })
@@ -68,10 +75,55 @@ course_add = CourseAddView.as_view()
 
 
 def do_section(request, section_id):
+    student = request.user
+    # students = User.objects.all()
+    if request.method == "POST":
+        form = PublicSettingsForm(section_id, student, request.POST)
+        if form.is_valid():
+            form.save()
+    form = PublicSettingsForm(section_id, student)
     section = Section.objects.get(id=section_id)
+    student_data = {'student': student}
+    student_data['score'] = calculate_score(student, section)
+    first_answer = UserAnswer.objects.filter(
+        user=student, question__section=section).order_by('test_was_taken').first()
+    if first_answer is not None:
+            student_data['test_was_taken'] = first_answer.test_was_taken
     return render(request, 'courses/do_section.html', {
-        'section': section
+        'student_data': student_data,
+        'section': section,
+        'form': form
     })
+
+
+# def do_section(request, section_id):
+#     courses = []
+#     for course in Course.objects.all():
+#         course_data = {'course': course}
+#         sections = []
+#         for section in course.section_set.all():
+#             section_data = {'section': section}
+#             students = []
+#             for student in course.public_students.all():
+#                 student_data = {'student': student}
+#                 student_data['score'] = calculate_score(student, section)
+#                 first_answer = UserAnswer.objects.filter(
+#                     user=student, question__section=section).order_by(
+#                     'test_was_taken').first()
+#                 if first_answer is not None:
+#                     student_data['test_was_taken'] = first_answer.test_was_taken
+#                 students.append(student_data)
+#             section_data['students'] = students
+#             sections.append(section_data)
+#         course_data['sections'] = sections
+#         courses.append(course_data)
+#     form = PublicSettingsForm(section_id, student)
+#     section = Section.objects.get(id=section_id)
+#     return render(request, 'courses/do_section.html', {
+#         'student_data': student_data,
+#         'form': form,
+#         'section': section
+# })
 
 
 def do_test(request, section_id):

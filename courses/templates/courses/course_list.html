@@ -17,15 +17,17 @@
                 <h1>A Course list</h1>
                 <ol>
                     {% for course in course_list %}
-                        <li><a href="{{ course.get_absolute_url }}">{{ course.name }}</a></li>
+                        <div style="background:whitesmoke "><ol><a href="{{ course.get_absolute_url }}">
+                            {{ course.name }}</a></ol>
                         <p><strong>{{ course.teacher|safe }}</strong> is the teacher for this Course</p>
-                        {{ course.context|safe }}
+                        {{ course.context|safe }}</div>
                     {% endfor %}
                 </ol>
             {% if request.user.is_authenticated %}
                 <h3>Click the link below to see Students Scores</h3>
                 <a href="{% url 'public_page' %}">Student Score</a>
             {% endif %}
+
             </div>
         </div>
     </div>

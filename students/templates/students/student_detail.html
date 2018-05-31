@@ -69,13 +69,8 @@
                                 {% endfor %}
                             </ul>
                         </li>
-                    {% endfor %}<br>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <p><strong>Please check the box to display ALL your scores for the WORLD to see!</strong></p>
-                    <table>{{ form.display_scores }}</table>
-                    <input type="submit" value="Submit">
-                </form>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

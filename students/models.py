@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-# from courses.models import Course
 
 
 class User(AbstractUser):
@@ -8,7 +7,7 @@ class User(AbstractUser):
 
 
 class Comment(models.Model):
-    # student_comment = models.ForeignKey(Course)
+    course = models.ForeignKey('courses.Course')
     student = models.ForeignKey(User)
     text = models.CharField(max_length=600)
 
